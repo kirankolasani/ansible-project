@@ -30,6 +30,7 @@
     unarchive: 
       src: /usr/share/nginx/html/web.zip
       dest: /usr/share/nginx/html/
+      remote_src: yes
 
   - name: Create Nginx Reverse Proxy Configuration
     template:
