@@ -59,7 +59,7 @@
     service:
       name: catalogue
       state: started
-      enabled: yes
+      enabled: true
 
   - name: Setup mongodb repo
     copy:
