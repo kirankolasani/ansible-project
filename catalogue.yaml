@@ -1,0 +1,19 @@
+---
+- name: Install & Configure Catalogue app
+  hosts: catalogue
+  become: yes
+  tasks:
+  - name: Setup NodeJS repos
+    script: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
+  
+  - name: Install NodeJS
+    yum:
+      name: NodeJS
+      state: installed
+
+  - name: Check application User exit or not
+    command: id roboshop
+    register: user
+  - name: print user
+    debug: 
+      var: {{user}}
