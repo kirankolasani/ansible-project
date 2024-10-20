@@ -1,0 +1,8 @@
+[mongodb]
+mongodb.myclouddevops.site
+
+[catalogue]
+catalogue.myclouddevops.site
+
+[web]
+web.myclouddevops.site
