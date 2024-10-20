@@ -23,7 +23,19 @@
   - name: Check an app directory
     stat:
       path: /app
-    register: st
-  - name: print
-    debug:
-      msg: '{{st}}'
+    register: st  
+  - name: Create app dir
+    file:
+      path: /app
+      state: dir
+    when: st.stat.exists == false
+
+  - name: Download the application code
+    get_url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+    dest: /app
+
+  - name: Unzip app code
+    unarchive: 
+      src: /app/catalogue.zip
+      
+
