@@ -39,5 +39,6 @@
     unarchive: 
       src: /app/catalogue.zip
       dest: /app
+      remote_src: yes
       
 
