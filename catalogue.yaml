@@ -27,7 +27,7 @@
   - name: Create app dir
     file:
       path: /app
-      state: dir
+      state: directory
     when: st.stat.exists == false
 
   - name: Download the application code
