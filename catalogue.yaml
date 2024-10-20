@@ -38,5 +38,6 @@
   - name: Unzip app code
     unarchive: 
       src: /app/catalogue.zip
+      dest: /app
       
 
