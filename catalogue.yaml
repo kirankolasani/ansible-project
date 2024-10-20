@@ -16,4 +16,4 @@
     register: user
   - name: print user
     debug: 
-      var: {{user}}
+      var: '{{user}}'
