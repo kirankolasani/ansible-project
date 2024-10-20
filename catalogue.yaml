@@ -14,6 +14,15 @@
   - name: Check application User exit or not
     command: id roboshop
     register: user
-  - name: print user
-    debug: 
-      var: '{{user}}'
+  - name: Add app user
+    user:
+      name: roboshop
+    when: user.rc != 0
+
+  - name: Check an app directory
+    stat:
+      path: /app
+    register: st
+  - name: print
+    debug:
+      msg: '{{st}}'
