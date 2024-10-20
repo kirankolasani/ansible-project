@@ -8,7 +8,7 @@
       
   - name: Install NodeJS
     yum:
-      name: NodeJS
+      name: nodejs
       state: installed
 
   - name: Check application User exit or not
