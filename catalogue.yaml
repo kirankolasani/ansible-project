@@ -72,7 +72,7 @@
       state: installed    
 
   - name: Load Schema
-    shell: 'mongo --host {{hostvars['mongodb'].ansible_host}} < /app/schema/catalogue.js'
+    shell: "mongo --host {{hostvars['mongodb'].ansible_host}} < /app/schema/catalogue.js"
 
   
 
