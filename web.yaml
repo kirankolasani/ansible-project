@@ -32,6 +32,8 @@
       dest: /etc/nginx/default.d/roboshop.conf
 
   - name: Restart Nginx Service
+    tags:
+     - restart nginx
     service:
       name: nginx
       state: restarted
