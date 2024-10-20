@@ -8,12 +8,6 @@
       name: nginx
       state: installed
 
-  - name: Start & Enable Nginx service
-    service:
-      name: nginx
-      state: started
-      enabled: true
-
   - name: Remove all files under html dir
     file:
       path: '{{ item }}'
@@ -41,5 +35,6 @@
     service:
       name: nginx
       state: restarted
+      enabled: yes
 
    
