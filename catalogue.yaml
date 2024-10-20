@@ -47,9 +47,10 @@
       chdir: /app
 
   - name: Setup SystemD Catalogue Service
-    copy:
+    template:
       src: catalogue.service.j2
       dest: /etc/systemd/system/catalogue.service
+
   
 
   
