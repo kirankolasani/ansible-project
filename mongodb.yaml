@@ -1,0 +1,31 @@
+---
+- name: Install and Configure mongodb
+  hosts: mongodb
+  become: yes
+  tasks:
+  - name: Setup mongodb repo
+    copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: Install MongoDB
+    yum: 
+      name: mongodb-org
+      state: installed
+
+  - name: Start & Enable MongoDB Service
+    service:
+      name: mongod
+      state: started
+      enabled: yes
+
+  - name: Update listen address
+    replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+  - name: Restart the service
+    service:
+      name: mongod
+      state: restarted
