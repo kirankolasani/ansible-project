@@ -4,9 +4,8 @@
   become: yes
   tasks:
   - name: Setup NodeJS repos
-    script: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
-    remote_src: yes
-  
+    shell: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
+      
   - name: Install NodeJS
     yum:
       name: NodeJS
