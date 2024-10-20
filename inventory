@@ -1,8 +1,5 @@
-[mongodb]
-mongodb.myclouddevops.site
+mongodb ansible_host=mongodb.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
 
-[catalogue]
-catalogue.myclouddevops.site
+catalogue ansible_host=catalogue.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
 
-[web]
-web.myclouddevops.site
+web ansible_host=web.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
