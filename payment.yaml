@@ -1,0 +1,58 @@
+---
+- name: Install & Setup Payment app
+  hosts: payment
+  become: true
+  tasks:
+  - name: Install Python 3.6
+    yum:
+      name: '{{item}}'
+      state: installed
+    loop:
+      - ["python36", "gcc", "python3-devel"]
+  
+  - name: Check application User
+    command: id roboshop
+    register: user
+    ignore_errors: yes
+
+  - name: Add application User
+    user:
+      name: roboshop
+    when: user.rc != 0
+
+  - name: Check an app directory
+    stat:
+      path: /app
+    register: dir
+
+  - name: setup an app directory
+    file: 
+      name: /app
+      state: directory
+    when: dir.stat.exists == false
+  
+  - name: Download the application code to created app directory
+    unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/payment.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies & build the application
+    shell: 'pip3.6 install -r requirements.txt'
+    args:
+      chdir: /app
+      
+  - name: Setup SystemD Payment Service
+    template:
+      src: payment.service.j2
+      dest: /etc/systemd/system/payment.service
+
+  - name: Load the service
+    systemd:
+      daemon-reload: true
+
+  - name: Start the service
+    service:
+      name: payment
+      state: started
+      enabled: yes
