@@ -14,3 +14,7 @@ mysql ansible_host=mysql.myclouddevops.site ansible_connection=ssh ansible_user=
 
 shipping ansible_host=shipping.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
 
+rabbitmq ansible_host=rabbitmq.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
+payment ansible_host=payment.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
