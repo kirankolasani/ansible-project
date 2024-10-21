@@ -1,0 +1,59 @@
+---
+- name: Install and setup Cart app
+  hosts: cart
+  become: yes
+  tasks:
+  - name: Setup NodeJS repos
+    shell: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
+
+  - name: Install NodeJS
+    yum: 
+      name: nodejs
+      state: installed
+
+  - name: Check application User
+    command: id roboshop
+    register: user
+    ignore_errors: yes
+
+  - name: Add application User
+    user:
+      name: roboshop
+    when: user.rc != 0
+
+  - name: Check an app directory
+    stat:
+      path: /app
+    register: dir
+
+  - name: setup an app directory
+    file: 
+      name: /app
+      state: directory
+    when: dir.stat.exists == false
+  
+  - name: Download the application code to created app directory
+    unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/cart.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies
+    command: npm install
+    args:
+      chdir: /app
+
+  - name: Setup SystemD cart Service
+    template:
+      src: cart.service.j2
+      dest: /etc/systemd/system/cart.service
+
+  - name: Load daemon-reload
+    systemd:
+      daemon-reload: true
+
+  - name: Load service
+    service:
+      name: cart
+      state: started
+      enabled: yes

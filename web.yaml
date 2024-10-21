@@ -27,13 +27,15 @@
       remote_src: yes
 
   - name: Create Nginx Reverse Proxy Configuration
+    tags:
+      - proxy_conf
     template:
       src: roboshop.conf.j2
       dest: /etc/nginx/default.d/roboshop.conf
 
   - name: Restart Nginx Service
     tags:
-     - restart nginx
+      - restart_nginx
     service:
       name: nginx
       state: restarted
