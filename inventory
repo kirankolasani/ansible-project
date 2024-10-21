@@ -10,3 +10,7 @@ user ansible_host=user.myclouddevops.site ansible_connection=ssh ansible_user=ce
 
 cart ansible_host=cart.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
 
+mysql ansible_host=mysql.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
+shipping ansible_host=shipping.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+

@@ -1,0 +1,73 @@
+---
+- name: Install & Configure Shipping app
+  hosts: shipping
+  become: true
+  tasks:
+  - name: Install Maven 
+    yum:
+      name: maven
+      state: installed
+
+  - name: Check application User
+    command: id roboshop
+    register: user
+    ignore_errors: yes
+
+  - name: Add application User
+    user:
+      name: roboshop
+    when: user.rc != 0
+
+  - name: Check an app directory
+    stat:
+      path: /app
+    register: dir
+
+  - name: setup an app directory
+    file: 
+      name: /app
+      state: directory
+    when: dir.stat.exists == false
+  
+  - name: Download the application code to created app directory
+    unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/shipping.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies & build the application
+    command: '{{item}}'
+    args:
+      chdir: /app
+    loop:
+      - "mvn clean package"
+      - "mv target/shipping-1.0.jar shipping.jar"
+  
+  - name: Setup SystemD Shipping Service
+    template:
+      src: shipping.service.j2
+      dest: /etc/systemd/system/shipping.service
+
+  - name: Load the service
+    systemd:
+      daemon-reload: true
+
+  - name: Start the service
+    service:
+      name: shipping
+      state: started
+      enabled: yes
+
+  - name: Install mysql client
+    yum:
+      name: mysql
+      state: installed
+
+  - name: Load Schema
+    shell: 'mysql -h {{hostvars['mysql'].ansible_host}} -uroot -pRoboShop@1 < /app/schema/shipping.sql'
+
+  - name: Restart the service
+    service:
+      name: shipping
+      state: restarted
+  
