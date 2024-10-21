@@ -10,7 +10,7 @@
       disable_gpg_check: true
 
   - name: Enable Redis 6.2
-    command: 'yum module enable redis:remi-6.2'
+    command: 'yum module enable redis:remi-6.2 -y'
 
   - name: Install Redis
     yum: 
