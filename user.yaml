@@ -26,10 +26,10 @@
     register: dir
 
   - name: setup an app directory
-      file: 
-        name: /app
-        state: directory
-      when: dir.stat.exists == false
+    file: 
+      name: /app
+      state: directory
+    when: dir.stat.exists == false
   
   - name: Download the application code to created app directory
     unarchive:
@@ -56,4 +56,3 @@
       name: user
       state: started
       enabled: yes
-      
