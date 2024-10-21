@@ -8,7 +8,7 @@
 
   - name: Install NodeJS
     yum: 
-      name: nodesjs
+      name: nodejs
       state: installed
 
   - name: Check application User
