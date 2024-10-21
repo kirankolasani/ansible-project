@@ -57,3 +57,16 @@
       name: user
       state: started
       enabled: yes
+
+  - name: Setup mongodb repo
+    copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: Install MongoDB client
+    yum: 
+      name: mongodb-org-shell
+      state: installed    
+
+  - name: Load Schema
+    shell: "mongo --host {{hostvars['mongodb'].ansible_host}} < /app/schema/user.js"
