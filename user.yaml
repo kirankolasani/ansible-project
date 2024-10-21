@@ -1,0 +1,59 @@
+---
+- name: Install and setup user app
+  hosts: user
+  become: yes
+  tasks:
+  - name: Setup NodeJS repos
+    shell: 'curl -sL https://rpm.nodesource.com/setup_lts.x | bash'
+
+  - name: Install NodeJS
+    yum: 
+      name: nodesjs
+      state: installed
+
+  - name: Check application User
+    command: id roboshop
+    register: user
+
+  - name: Add application User
+    user:
+      name: roboshop
+    when: user.rc != 0
+
+  - name: Check an app directory
+    stat:
+      path: /app
+    register: dir
+
+  - name: setup an app directory
+      file: 
+        name: /app
+        state: directory
+      when: dir.stat.exists == false
+  
+  - name: Download the application code to created app directory
+    unarchive:
+      src: https://roboshop-builds.s3.amazonaws.com/user.zip
+      dest: /app
+      remote_src: yes
+
+  - name: download the dependencies
+    command: npm install
+    args:
+      chdir: /app
+
+  - name: Setup SystemD User Service
+    template:
+      src: user.service.j2
+      dest: /etc/systemd/system/user.service
+
+  - name: Load daemon-reload
+    systemd:
+      daemon-reload: true
+
+  - name: Load service
+    service:
+      name: user
+      state: started
+      enabled: yes
+      
