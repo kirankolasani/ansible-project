@@ -64,7 +64,7 @@
       state: installed
 
   - name: Load Schema
-    shell: 'mysql -h {{hostvars['mysql'].ansible_host}} -uroot -pRoboShop@1 < /app/schema/shipping.sql'
+    shell: "mysql -h {{hostvars['mysql'].ansible_host}} -uroot -pRoboShop@1 < /app/schema/shipping.sql"
 
   - name: Restart the service
     service:
