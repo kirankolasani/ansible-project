@@ -3,3 +3,10 @@ mongodb ansible_host=mongodb.myclouddevops.site ansible_connection=ssh ansible_u
 catalogue ansible_host=catalogue.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
 
 web ansible_host=web.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
+redis ansible_host=redis.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
+user ansible_host=user.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+
+cart ansible_host=cart.myclouddevops.site ansible_connection=ssh ansible_user=centos ansible_ssh_pass=DevOps321
+

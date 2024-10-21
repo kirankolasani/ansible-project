@@ -1,0 +1,30 @@
+---
+- name: Install & Setup Redis
+  hosts: redis
+  become: yes
+  tasks:
+  - name: Setup redis repo file as a rpm
+    yum: 
+      name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+      state: installed
+
+  - name: Enable Redis 6.2
+    command: 'yum module enable redis:remi-6.2'
+
+  - name: Install Redis
+    yum: 
+      name: redis
+      state: installed
+
+  - name: Update listen address
+    replace:
+      path: /etc/redis.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+  - name: Start & Enable Redis Service
+    service:
+      name: redis
+      state: started
+      enabled: yes
+      
