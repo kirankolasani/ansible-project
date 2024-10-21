@@ -1,0 +1,27 @@
+---
+- name: Install & configure MYSQL
+  hosts: mysql
+  become: true
+  tasks:
+  - name: Disable MySQL 8 version
+    command: "yum module disable mysql -y"
+
+  - name: Setup the MySQL5.7 repo file
+    copy:
+      src: mysql.repo
+      dest: /etc/yum.repos.d/mysql.repo
+
+  - name: Install MySQL Server
+    yum:
+      name: mysql-community-server
+      state: installed
+
+  - name: Start MySQL Service
+    service: 
+      name: mysqld
+      enabled: yes
+      state: started
+
+  - name: change the default root password for mysql
+    shell: 'mysql_secure_installation --set-root-pass RoboShop@1'
+    
